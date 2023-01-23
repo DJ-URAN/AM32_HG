@@ -198,9 +198,9 @@
 //=============================  Defaults =============================
 //===========================================================================
 
-uint8_t drive_by_rpm = 0;
+uint8_t drive_by_rpm = 1;
 uint32_t MAXIMUM_RPM_SPEED_CONTROL = 10000;
-uint32_t MINIMUM_RPM_SPEED_CONTROL = 1000;
+uint32_t MINIMUM_RPM_SPEED_CONTROL = 5;
 
  //assign speed control PID values values are x10000
  fastPID speedPid = {      //commutation speed loop time
@@ -344,7 +344,7 @@ char cell_count = 0;
 char brushed_direction_set = 0;
 
 uint16_t tenkhzcounter = 0;
-float consumed_current = 0;
+//float consumed_current = 0;
 uint32_t smoothed_raw_current = 0;
 int16_t actual_current = 0;
 
@@ -952,7 +952,7 @@ void tenKhzRoutine(){
 
 	tenkhzcounter++;
 	if(tenkhzcounter > 10000){      // 1s sample interval 10000
-		consumed_current = (float)actual_current/360 + consumed_current;
+		//consumed_current = (float)actual_current/360 + consumed_current;
 					switch (dshot_extended_telemetry){
 
 					case 1:
@@ -1239,7 +1239,7 @@ if(send_telemetry){
 	  makeTelemPackage(degrees_celsius,
 			           battery_voltage,
 					   actual_current,
-	  				   (uint16_t)consumed_current,
+	  				   //(uint16_t)consumed_current,
 	  					e_rpm);
 	  send_telem_DMA();
 	  send_telemetry = 0;
