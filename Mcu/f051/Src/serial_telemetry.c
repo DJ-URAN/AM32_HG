@@ -9,7 +9,7 @@
 #include "serial_telemetry.h"
 
 
-uint8_t aTxBuffer[10];
+uint8_t aTxBuffer[7];
 uint8_t nbDataToTransmit = sizeof(aTxBuffer);
 
 void telem_UART_Init(void)
@@ -117,12 +117,12 @@ void makeTelemPackage(uint8_t temp, uint16_t voltage, uint16_t current, uint16_t
   aTxBuffer[3] = (current >> 8) & 0xFF; // current
   aTxBuffer[4] = current & 0xFF; // divide by 10 for Amps
 
-  aTxBuffer[5] = (consumption >> 8) & 0xFF; // consumption
-  aTxBuffer[6] = consumption & 0xFF; //  in mah
+  //aTxBuffer[5] = (consumption >> 8) & 0xFF; // consumption
+  //aTxBuffer[6] = consumption & 0xFF; //  in mah
 
-  aTxBuffer[7] = (e_rpm >> 8) & 0xFF; //
-  aTxBuffer[8] = e_rpm & 0xFF; // eRpM *100
+  aTxBuffer[5] = (e_rpm / 7) & 0xFF; //
+  //aTxBuffer[8] = e_rpm & 0xFF; // eRpM *100
 
-  aTxBuffer[9] = get_crc8(aTxBuffer,9);
+  aTxBuffer[6] = get_crc8(aTxBuffer,7);
 }
 
